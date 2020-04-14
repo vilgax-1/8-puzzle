@@ -7,7 +7,7 @@ export class Board {
   blank;
   hammingScore;
   manhattanScore;
-  _tiles_swapped;
+  tilesSwapped;
   prevBlank;
   steps;
   prevNode;
@@ -15,10 +15,8 @@ export class Board {
   constructor(blocks) {
     this.blocks = blocks;
     this.N = blocks[0].length;
-    this.move;
     this.blankR = 0;
     this.blankC = 0;
-    this.blank;
     this.hammingScore = 0;
     this.manhattanScore = 0;
     this.contructGoalBoard();
@@ -106,13 +104,13 @@ export class Board {
 
   createNewBlocks(newPosition) {
     function copy(arr) {
-        let new_arr = arr.slice(0);
-        for (let i = new_arr.length; i--;) {
-          if (new_arr[i] instanceof Array) {
-            new_arr[i] = copy(new_arr[i]);
+        const newArr = arr.slice(0);
+        for (let i = newArr.length; i--;) {
+          if (newArr[i] instanceof Array) {
+            newArr[i] = copy(newArr[i]);
           }
         }
-        return new_arr;
+        return newArr;
     }
     const blank = this.blank;
     const newBlocks = copy(this.blocks);
@@ -131,13 +129,13 @@ export class Board {
 
     if (r !== 0) {
         // I can swap [0][0] and [0][1]
-        this._tiles_swapped = { tile_1: { x: 0, y: 0 }, tile_2: { x: 0, y: 1 }};
+        this.tilesSwapped = { tile_1: { x: 0, y: 0 }, tile_2: { x: 0, y: 1 }};
         copiedBlocks = this.swap(copiedBlocks, 0, 0, 0, 1);
         const brd = new Board(copiedBlocks);
         return brd;
     } else {
         // I can swap [1][0] and [1][1]
-        this._tiles_swapped = { tile_1: { x: 1, y: 0 }, tile_2: { x: 1, y: 1 }};
+        this.tilesSwapped = { tile_1: { x: 1, y: 0 }, tile_2: { x: 1, y: 1 }};
         copiedBlocks = this.swap(copiedBlocks, 1, 0, 1, 1);
         const brd = new Board(copiedBlocks);
         return brd;
@@ -145,17 +143,17 @@ export class Board {
   }
 
   tiles_swapped() {
-    return this._tiles_swapped;
+    return this.tilesSwapped;
   }
 
   copy(arr) {
-    const new_arr = arr.slice(0);
-    for (let i = new_arr.length; i--;){
-      if (new_arr[i] instanceof Array){
-        new_arr[i] = this.copy(new_arr[i]);
+    const newArr = arr.slice(0);
+    for (let i = newArr.length; i--;) {
+      if (newArr[i] instanceof Array) {
+        newArr[i] = this.copy(newArr[i]);
       }
     }
-    return new_arr;
+    return newArr;
   }
 
   swap(blks, x1, y1, x2, y2) {
