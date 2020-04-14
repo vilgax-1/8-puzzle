@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="card">
+    <div class="box">
+      <div class="square" *ngFor="let numero of numeroOrden" [ngClass]="{'blank': numero == 0}">
+        {{ numero }}
+      </div>
+    </div>
+    <div class="options">
+      <button class="boton" (click)="orden()">Ingresa el orden</button>
+      <button class="resolver" (click)="resolver()">Resolver</button>
+    </div>
+  </div>
+</div>
+<h1>Historial</h1>
+<div class="contenedor-cards">
+  <div class="card" *ngFor="let item of historial" [style.background]="randomColor">
+    <div class="square">
+      <div class="block" *ngFor="let number of item" [ngClass]="{'blank': number == 0}">
+        {{ number }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <router-outlet></router-outlet> -->

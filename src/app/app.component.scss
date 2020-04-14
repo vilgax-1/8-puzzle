@@ -1,0 +1,96 @@
+.container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 80vh;
+  .card{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .box{
+      width: 20vw;
+      height: 20vw;
+      border: 2px solid black;
+      display: flex;
+      flex-wrap: wrap;
+
+      .square{
+        width: 6.52vw;
+        height: 6.53vw;
+        border: 1px solid black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 3vw;
+        &.blank{
+          color: transparent;
+        }
+      }
+    }
+
+    .options{
+      margin-top: 1vw;
+      display: flex;
+      flex-direction: column;
+
+      .boton, .resolver{
+        width: 20vw;
+        height: 4vw;
+        font-size: 2vw;
+        border-radius: 1vw;
+        border: none;
+        font-weight: bold;
+        cursor: pointer;
+        background: #026acc;
+      }
+      .resolver{
+        margin-top: 1vw;
+        background: #aae300;
+      }
+    }
+  }
+}
+
+.contenedor-cards{
+  width: 100vw;
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+
+  .card{
+    width: 30vw;
+    border-radius: 1vw;
+    box-shadow: 1px 1px 4px 3px rgba($color: #000000, $alpha: .25);
+    margin: 1vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .square{
+      margin: 2vw 0;
+      width: 7vw;
+      height: 7vw;
+      border: 1px solid black;
+      display: flex;
+      flex-wrap: wrap;
+
+      .block{
+        width: 2.195vw;
+        height: 2.17vw;
+        border: 1px solid black;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1vw;
+        &.blank{
+          color: transparent;
+        }
+      }
+    }
+  }
+}
