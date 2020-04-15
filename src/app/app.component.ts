@@ -8,22 +8,21 @@ import { Solver } from './Classes/solver';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  divido = [[ 1, 3, 0 ],
-            [ 2, 4, 7 ],
-            [ 6, 5, 8 ]];
+  dividido = [[ 7, 6, 1 ],
+  [ 2, 3, 0 ],
+  [ 4, 5, 8 ]];
 
-  numeroOrden: any = [1, 3, 0, 2, 4, 7, 6, 5, 8];
+  numeroOrden: any = [7, 6, 1, 2, 3, 0, 4, 5, 8];
   historial: Array<any>;
   finalState = [1, 2, 3, 4, 5, 6, 7, 8, 0];
   constructor(
-  ) {
-  }
+  ) {}
 
   get randomColor() {
     const x = Math.floor(Math.random() * 256);
     const y = Math.floor(Math.random() * 256);
     const z = Math.floor(Math.random() * 256);
-    return "rgb(" + x + "," + y + "," + z + ")";
+    return `rgb(${x},${y},${z})`;
   }
 
   orden() {
@@ -44,10 +43,10 @@ export class AppComponent {
           posX++;
           posY = 0;
         }
-        if (this.numeroOrden[i] == '0') {
+        if (this.numeroOrden[i] === '0') {
           flag = true;
         }
-        this.divido[posX][posY++] = parseInt(order[i]);
+        this.dividido[posX][posY++] = Number(order[i]);
       }
       if (flag) {
         this.numeroOrden = [];
@@ -59,7 +58,7 @@ export class AppComponent {
     }
   }
   queue(funcs, delay) {
-    let i;
+    // let i;
     let o;
     setTimeout(function run() {
       o = funcs.shift();
@@ -71,11 +70,14 @@ export class AppComponent {
   }
 
   resolver() {
+<<<<<<< HEAD
     const board = new Board(this.divido);
     console.log('board', board);
+=======
+    const board = new Board(this.dividido);
+>>>>>>> origin/master
     const solver = new Solver();
     const solution = solver.create(board);
-
     if (solution.isSolvable) {
       const q = [];
       const boards = solution.getSolution();
@@ -89,6 +91,7 @@ export class AppComponent {
 
       this.queue(q, 200);
     } else {
+      alert('No solution found');
       console.log('No solution found');
     }
   }

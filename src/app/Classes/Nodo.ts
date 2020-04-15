@@ -23,7 +23,7 @@ export class Nodo {
     if (this.score() < other.score()) {
       return -1;
     }
-    if (this.score() > other.score()){
+    if (this.score() > other.score()) {
       return 1;
     } else {
       if (this.score('hamming') < other.score('hamming')) {

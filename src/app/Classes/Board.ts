@@ -127,11 +127,19 @@ export class Board {
     let copiedBlocks = this.copy(this.blocks);
 
     if (r !== 0) {
+<<<<<<< HEAD
+=======
+        // I can swap [0][0] and [0][1]
+>>>>>>> origin/master
         this.tilesSwapped = { tile_1: { x: 0, y: 0 }, tile_2: { x: 0, y: 1 }};
         copiedBlocks = this.swap(copiedBlocks, 0, 0, 0, 1);
         const brd = new Board(copiedBlocks);
         return brd;
     } else {
+<<<<<<< HEAD
+=======
+        // I can swap [1][0] and [1][1]
+>>>>>>> origin/master
         this.tilesSwapped = { tile_1: { x: 1, y: 0 }, tile_2: { x: 1, y: 1 }};
         copiedBlocks = this.swap(copiedBlocks, 1, 0, 1, 1);
         const brd = new Board(copiedBlocks);
