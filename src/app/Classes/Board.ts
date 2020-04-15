@@ -32,37 +32,39 @@ export class Board {
     let counter = 1;
 
     for (let i = 0; i < this.N; i++) {
-      for (let j = 0; j < this.N; j++) {
+        for (let j = 0; j < this.N; j++) {
 
-        if (this.blocks[i][j] === 0) {
-          this.blankR = i;
-          this.blankC = j;
-          this.blank = [i, j];
-        }
-
-        if (this.blocks[i][j] !== 0) {
-          if (this.blocks[i][j] !== counter) {
-            hScore += 1;
-
-            const cRow = i;
-            const cCol = j;
-            let val = this.blocks[i][j];
-
-            if (val !== 0) {
-              val -= 1;
+            if (this.blocks[i][j] === 0) {
+                this.blankR = i;
+                this.blankC = j;
+                this.blank = [i, j];
             }
+            // Calculate the Hamming and Manhattan here since we are
+            // going through the board to find the blank space
 
-            const wRow = Math.floor(val / this.N);
-            const wCol = Math.floor(val % this.N);
-            mScore += Math.abs(cRow - wRow);
-            mScore += Math.abs(cCol - wCol);
-          }
+            if (this.blocks[i][j] !== 0) {
+                if (this.blocks[i][j] !== counter) {
+                    hScore += 1;
+
+                    const cRow = i;
+                    const cCol = j;
+                    let val = this.blocks[i][j];
+
+                    if (val !== 0) {
+                        val -= 1;
+                    }
+
+                    const wRow = Math.floor(val / this.N);
+                    const wCol = Math.floor(val % this.N);
+
+                    mScore += Math.abs(cRow - wRow);
+                    mScore += Math.abs(wCol + cCol);
+                }
+            }
+            counter += 1;
         }
-        counter += 1;
-      }
-
-      this.hammingScore = hScore;
-      this.manhattanScore = mScore;
+        this.hammingScore = hScore;
+        this.manhattanScore = mScore;
     }
   }
 
@@ -123,26 +125,20 @@ export class Board {
   }
 
   twin() {
-    const r = this.blocks[0][0] * this.blocks[0][1];
+    let r = this.blocks[0][0] * this.blocks[0][1];
     let copiedBlocks = this.copy(this.blocks);
 
     if (r !== 0) {
-<<<<<<< HEAD
-=======
         // I can swap [0][0] and [0][1]
->>>>>>> origin/master
         this.tilesSwapped = { tile_1: { x: 0, y: 0 }, tile_2: { x: 0, y: 1 }};
         copiedBlocks = this.swap(copiedBlocks, 0, 0, 0, 1);
-        const brd = new Board(copiedBlocks);
+        let brd = new Board(copiedBlocks);
         return brd;
     } else {
-<<<<<<< HEAD
-=======
         // I can swap [1][0] and [1][1]
->>>>>>> origin/master
         this.tilesSwapped = { tile_1: { x: 1, y: 0 }, tile_2: { x: 1, y: 1 }};
         copiedBlocks = this.swap(copiedBlocks, 1, 0, 1, 1);
-        const brd = new Board(copiedBlocks);
+        let brd = new Board(copiedBlocks);
         return brd;
     }
   }
@@ -197,16 +193,5 @@ export class Board {
         }
     }
     return true;
-  }
-
-  printBoard() {
-    let s = '';
-    for (let i = 0; i < 3; i++) {
-      for (let j = 0; j < 3; j++) {
-          s += this.blocks[i][j] + ', ';
-      }
-      s += '\n';
-    }
-    s += this.move;
   }
 }

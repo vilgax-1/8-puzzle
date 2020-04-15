@@ -12,7 +12,6 @@ export class Solver {
   };
 
   s = {
-    // solve: this.solve,
     steps: 0,
     init(board) {
       this.solve(board);
@@ -26,22 +25,15 @@ export class Solver {
     isSolvable: false
   };
 
-  constructor() {}
+  constructor() { }
 
   getSol() {
     return this.obj.solvable;
   }
 
-<<<<<<< HEAD
-=======
-
-  cola() {
-    console.log('entra');
-  }
   public getSolution() {
     return this.solution;
   }
->>>>>>> origin/master
   solve(board) {
     this.winingBoard = board;
     const initialNode = new Nodo(board, undefined, 0);
@@ -51,11 +43,15 @@ export class Solver {
 
     PQ.insert(initialNode);
     PQTwin.insert(initialTwin);
+
     const popo = new Solver();
 
+    let searchNode;
+    let searchNodeTwin;
+
     while (true) {
-      const searchNode = PQ.delMin();
-      const searchNodeTwin = PQTwin.delMin();
+      searchNode = PQ.delMin();
+      searchNodeTwin = PQTwin.delMin();
 
       if (searchNode.board.isGoal()) {
         this.isSolvable = true;
@@ -71,6 +67,8 @@ export class Solver {
       popo.addVecinos(PQ, searchNode);
       popo.addVecinos(PQTwin, searchNodeTwin);
     }
+
+    this.constructSolution(searchNode);
   }
 
   constructSolution(nodo) {
@@ -88,25 +86,14 @@ export class Solver {
   }
 
   create(board) {
-    console.log('S', this.s);
     this.solve(board);
     return this.s;
-    /*const t = Object.create(this.s);
-    console.log('T', t);
-    t.init(board);
-    return t;*/
   }
 
-<<<<<<< HEAD
-  addVecinos(queue, nodo) {
-=======
   addVecinos(queue, nodo: Nodo) {
-    console.log('NODO', nodo);
->>>>>>> origin/master
-    const vecinos = nodo.board.getNeighbors();
-    vecinos.forEach( (board, index) => {
+    const neighbours = nodo.board.getNeighbors();
+    neighbours.forEach((board, index) => {
       const n = new Nodo(board, nodo, nodo.steps + 1);
-
       if (nodo.prev !== undefined) {
         if (!board.equals(nodo.prev.board)) {
           queue.insert(n);

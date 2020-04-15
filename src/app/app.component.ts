@@ -43,7 +43,7 @@ export class AppComponent {
           posX++;
           posY = 0;
         }
-        if (this.numeroOrden[i] === '0') {
+        if (this.numeroOrden[i] == '0') {
           flag = true;
         }
         this.dividido[posX][posY++] = Number(order[i]);
@@ -70,18 +70,13 @@ export class AppComponent {
   }
 
   resolver() {
-<<<<<<< HEAD
-    const board = new Board(this.divido);
-    console.log('board', board);
-=======
     const board = new Board(this.dividido);
->>>>>>> origin/master
     const solver = new Solver();
     const solution = solver.create(board);
+
     if (solution.isSolvable) {
       const q = [];
       const boards = solution.getSolution();
-      console.log(boards);
       // for (let i = 0; i < boards.length; i++) {
       //   boards[i].printBoard();
       //   if (boards[i].move !== undefined) {

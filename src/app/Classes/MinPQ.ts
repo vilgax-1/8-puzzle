@@ -48,12 +48,9 @@ export class MinPQ {
   sink(k) {
     while (2 * k <= this.N) {
       let j = 2 * k;
-      if (j < this.N && this.greater(j, j + 1)) {
+      if (j < this.N && this.greater(j, j + 1))
         j++;
-      }
-      if (!this.greater(k, j)) {
-        break;
-      }
+      if (!this.greater(k, j)) break;
       this.exch(k, j);
       k = j;
     }
