@@ -14,7 +14,6 @@ export class Solver {
   s = {
     solve: this.solve,
     steps: 0,
-
     init(board) {
       this.solve(board);
     },
@@ -32,11 +31,6 @@ export class Solver {
     return this.obj.solvable;
   }
 
-
-  cola() {
-    console.log('entra');
-  }
-
   solve(board) {
     this.winnig_board = board;
     const initialNode = new Nodo(board, undefined, 0);
@@ -46,6 +40,7 @@ export class Solver {
 
     PQ.insert(initialNode);
     PQTwin.insert(initialTwin);
+    const popo = new Solver();
 
     while (true) {
       const searchNode = PQ.delMin();
@@ -62,8 +57,8 @@ export class Solver {
         this.winnig_board = this.winnig_board.twin();
         break;
       }
-      this.addVecinos(PQ, searchNode);
-      this.addVecinos(PQTwin, searchNodeTwin);
+      popo.addVecinos(PQ, searchNode);
+      popo.addVecinos(PQTwin, searchNodeTwin);
     }
   }
 
@@ -88,7 +83,7 @@ export class Solver {
   }
 
   addVecinos(queue, nodo) {
-    const vecinos = nodo.board.getNeightbors();
+    const vecinos = nodo.board.getNeighbors();
     vecinos.forEach( (board, index) => {
       const n = new Nodo(board, nodo, nodo.steps + 1);
 

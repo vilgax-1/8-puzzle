@@ -8,9 +8,9 @@ import { Solver } from './Classes/solver';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  divido = [[0, 0, 0],
-  [0, 0, 0],
-  [0, 0, 0]];
+  divido = [[ 1, 3, 0 ],
+            [ 2, 4, 7 ],
+            [ 6, 5, 8 ]];
 
   numeroOrden: any = [1, 3, 0, 2, 4, 7, 6, 5, 8];
   historial: Array<any>;
@@ -72,13 +72,14 @@ export class AppComponent {
 
   resolver() {
     const board = new Board(this.divido);
+    console.log('board', board);
     const solver = new Solver();
     const solution = solver.create(board);
 
     if (solution.isSolvable) {
       const q = [];
       const boards = solution.getSolution();
-
+      console.log(boards);
       // for (let i = 0; i < boards.length; i++) {
       //   boards[i].printBoard();
       //   if (boards[i].move !== undefined) {
