@@ -10,28 +10,25 @@ export class Nodo {
   }
 
   score(method?) {
-    if (method === undefined) {
-      return this.board.manhattan() + this.steps;
-    }
+    if(method === undefined)
+        return this.board.manhattan() + this.steps;
 
-    if (method === 'hamming') {
-      return this.board.hamming() + this.steps;
-    }
+    if(method == "hamming")
+        return this.board.hamming() + this.steps;
   }
 
   compareTo(other) {
-    if (this.score() < other.score()) {
-      return -1;
-    }
-    if (this.score() > other.score()) {
-      return 1;
-    } else {
-      if (this.score('hamming') < other.score('hamming')) {
+    if (this.score() < other.score())
         return -1;
-      }
-      if (this.score('hamming') > other.score('hamming')) {
-
-      }
+    if (this.score() > other.score()) {
+        return 1;
+    } else {
+        if (this.score('hamming') < other.score('hamming')) {
+            return -1;
+        }
+        if (this.score('hamming') > other.score('hamming')) {
+            return 1;
+        }
     }
     return 0;
   }

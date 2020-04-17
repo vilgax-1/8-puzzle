@@ -39,8 +39,6 @@ export class Board {
                 this.blankC = j;
                 this.blank = [i, j];
             }
-            // Calculate the Hamming and Manhattan here since we are
-            // going through the board to find the blank space
 
             if (this.blocks[i][j] !== 0) {
                 if (this.blocks[i][j] !== counter) {
@@ -58,7 +56,8 @@ export class Board {
                     const wCol = Math.floor(val % this.N);
 
                     mScore += Math.abs(cRow - wRow);
-                    mScore += Math.abs(wCol + cCol);
+                    mScore += Math.abs(wCol);
+                    mScore +=  Math.abs(cCol);
                 }
             }
             counter += 1;
@@ -106,13 +105,11 @@ export class Board {
 
   createNewBlocks(newPosition) {
     function copy(arr) {
-        const newArr = arr.slice(0);
-        for (let i = newArr.length; i--;) {
-          if (newArr[i] instanceof Array) {
-            newArr[i] = copy(newArr[i]);
-          }
-        }
-        return newArr;
+      let newArr = arr.slice(0);
+      for (let i = newArr.length; i--;)
+          if (newArr[i] instanceof Array)
+              newArr[i] = copy(newArr[i]);
+      return newArr;
     }
     const blank = this.blank;
     const newBlocks = copy(this.blocks);
@@ -124,21 +121,36 @@ export class Board {
     return newBlocks;
   }
 
+  nodeComparer(n1, n2) {
+    function doCompare(method) {
+      if (n1[method]() < n2[method]())
+          return -1;
+      else if (n1[method]() > n2[method]())
+          return 1;
+      else return 0;
+    }
+
+    const r = doCompare("Manhatten");
+    if (r === 0)
+        return doCompare("Hamming");
+    else return r;
+  }
+
   twin() {
-    let r = this.blocks[0][0] * this.blocks[0][1];
+    const r = this.blocks[0][0] * this.blocks[0][1];
     let copiedBlocks = this.copy(this.blocks);
 
     if (r !== 0) {
         // I can swap [0][0] and [0][1]
         this.tilesSwapped = { tile_1: { x: 0, y: 0 }, tile_2: { x: 0, y: 1 }};
         copiedBlocks = this.swap(copiedBlocks, 0, 0, 0, 1);
-        let brd = new Board(copiedBlocks);
+        const brd = new Board(copiedBlocks);
         return brd;
     } else {
         // I can swap [1][0] and [1][1]
         this.tilesSwapped = { tile_1: { x: 1, y: 0 }, tile_2: { x: 1, y: 1 }};
         copiedBlocks = this.swap(copiedBlocks, 1, 0, 1, 1);
-        let brd = new Board(copiedBlocks);
+        const brd = new Board(copiedBlocks);
         return brd;
     }
   }
@@ -165,18 +177,21 @@ export class Board {
   }
 
   isGoal() {
-    const maximum = this.N * this.N;
     let counter = 0;
-    for (let i = 0; i < this.N; i++) {
-        for (let j = 0; j < this.N; j++) {
-            counter += 1;
-            if (counter === maximum) {
-              return true;
-            }
-            if (this.blocks[i][j] !== counter) {
-              return false;
-            }
+    let flag = true;
+    for (let i = 0; i < 3; i++) {
+      for (let j = 0; j < 3; j++) {
+        counter++;
+        if (counter === 9) {
+          counter = 0;
         }
+        if (this.blocks[i][j] === counter) {
+            flag = true;
+        }
+        if (this.blocks[i][j] !== counter) {
+            return false;
+        }
+      }
     }
     return true;
   }

@@ -5,8 +5,8 @@ export class MinPQ {
 
   constructor(compare?) {
     this.compare = compare;
+    this.pq = [];
     this.N = 0;
-    this.pq = new Array();
   }
 
   isEmpty() {

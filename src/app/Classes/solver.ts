@@ -12,6 +12,7 @@ export class Solver {
   };
 
   s = {
+    solve: this.solve,
     steps: 0,
     init(board) {
       this.solve(board);
@@ -36,6 +37,10 @@ export class Solver {
   }
   solve(board) {
     this.winingBoard = board;
+    const popo = new Solver();
+
+    let searchNode: any;
+    let searchNodeTwin: any;
     const initialNode = new Nodo(board, undefined, 0);
     const initialTwin = new Nodo(board.twin(), undefined, 0);
     const PQ = new MinPQ();
@@ -44,10 +49,6 @@ export class Solver {
     PQ.insert(initialNode);
     PQTwin.insert(initialTwin);
 
-    const popo = new Solver();
-
-    let searchNode;
-    let searchNodeTwin;
 
     while (true) {
       searchNode = PQ.delMin();
@@ -68,16 +69,12 @@ export class Solver {
       popo.addVecinos(PQTwin, searchNodeTwin);
     }
 
-    this.constructSolution(searchNode);
-  }
-
-  constructSolution(nodo) {
     if (this.isSolvable) {
       const stack = [];
-      stack.push(nodo.board);
-      while (nodo.prev !== undefined) {
-        nodo = nodo.prev;
-        stack.push(nodo.board);
+      stack.push(searchNode.board);
+      while (searchNode.prev !== undefined) {
+        searchNode = searchNode.prev;
+        stack.push(searchNode.board);
       }
       this.solution = stack.reverse();
     } else {
@@ -85,17 +82,22 @@ export class Solver {
     }
   }
 
+
   create(board) {
-    this.solve(board);
-    return this.s;
+    const t = Object.create(this.s);
+    t.init(board);
+    return t;
+    // this.solve(board);
+    // return this.s;
   }
 
-  addVecinos(queue, nodo: Nodo) {
-    const neighbours = nodo.board.getNeighbors();
+  addVecinos(queue, node) {
+    const neighbours = node.board.getNeighbors();
     neighbours.forEach((board, index) => {
-      const n = new Nodo(board, nodo, nodo.steps + 1);
-      if (nodo.prev !== undefined) {
-        if (!board.equals(nodo.prev.board)) {
+    const n = new Nodo(board, node, node.steps + 1);
+
+    if (node.prev !== undefined) {
+        if (!board.equals(node.prev.board)) {
           queue.insert(n);
         }
       } else {

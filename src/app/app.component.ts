@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { Board } from './Classes/Board';
 import { Solver } from './Classes/solver';
-
+import * as _ from 'lodash';
+import { timer } from 'rxjs';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  dividido = [[ 7, 6, 1 ],
-  [ 2, 3, 0 ],
-  [ 4, 5, 8 ]];
+  dividido = [[ 1, 2, 3 ],
+  [ 4, 5, 6 ],
+  [ 7, 0, 8 ]];
 
-  numeroOrden: any = [7, 6, 1, 2, 3, 0, 4, 5, 8];
-  historial: Array<any>;
-  finalState = [1, 2, 3, 4, 5, 6, 7, 8, 0];
+  numberOrder: any = [1,2,3,4,5,6,7,0,8];
+  history = [];
   constructor(
   ) {}
 
@@ -43,51 +43,39 @@ export class AppComponent {
           posX++;
           posY = 0;
         }
-        if (this.numeroOrden[i] == '0') {
+        if (this.numberOrder[i] == '0') {
           flag = true;
         }
         this.dividido[posX][posY++] = Number(order[i]);
       }
       if (flag) {
-        this.numeroOrden = [];
-        this.numeroOrden = aux;
+        this.numberOrder = [];
+        this.numberOrder = aux;
 
       } else {
         alert('No se ingreso el espacio en blanco');
       }
     }
   }
-  queue(funcs, delay) {
-    // let i;
-    let o;
-    setTimeout(function run() {
-      o = funcs.shift();
-      if (o !== undefined) {
-        o.fnc(o.args[0], o.args[1]);
-        setTimeout(run, delay);
-      }
-    }, delay);
-  }
 
   resolver() {
+    let time = timer(500);
+    this.history = [];
     const board = new Board(this.dividido);
     const solver = new Solver();
     const solution = solver.create(board);
 
     if (solution.isSolvable) {
-      const q = [];
       const boards = solution.getSolution();
-      // for (let i = 0; i < boards.length; i++) {
-      //   boards[i].printBoard();
-      //   if (boards[i].move !== undefined) {
-      //     q.push({ fnc: game.movePosition, args: [boards[i].move[0], boards[i].move[1]] })
-      //   }
-      // }
-
-      this.queue(q, 200);
+      time.subscribe(() => {
+        for(let i = 0; i < boards.length; i++) {
+          this.numberOrder = [];
+          this.numberOrder.push(_.concat( boards[i].blocks[0], boards[i].blocks[1], boards[i].blocks[2]));
+          this.history.push( _.concat( boards[i].blocks[0], boards[i].blocks[1], boards[i].blocks[2]));
+        }
+      });
     } else {
-      alert('No solution found');
-      console.log('No solution found');
+      alert('Solucion no encontrada');
     }
   }
 }

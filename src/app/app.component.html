@@ -1,8 +1,8 @@
 <div class="container">
   <div class="card">
     <div class="box">
-      <div class="square" *ngFor="let numero of numeroOrden" [ngClass]="{'blank': numero == 0}">
-        {{ numero }}
+      <div class="square" *ngFor="let number of numberOrder" [ngClass]="{'blank': number == 0}">
+        {{ number }}
       </div>
     </div>
     <div class="options">
@@ -13,7 +13,7 @@
 </div>
 <h1>Historial</h1>
 <div class="contenedor-cards">
-  <div class="card" *ngFor="let item of historial" [style.background]="randomColor">
+  <div class="card" *ngFor="let item of history" [style.background]="randomColor">
     <div class="square">
       <div class="block" *ngFor="let number of item" [ngClass]="{'blank': number == 0}">
         {{ number }}
