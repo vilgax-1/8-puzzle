@@ -11,15 +11,14 @@
     align-items: center;
 
     .box{
-      width: 20vw;
-      height: 20vw;
-      border: 2px solid black;
+      width: 22.5vw;
+      height: 21.5vw;
       display: flex;
       flex-wrap: wrap;
 
       .square{
-        width: 6.52vw;
-        height: 6.53vw;
+        width: 7vw;
+        height: 7.2vw;
         border: 1px solid black;
         display: flex;
         align-items: center;
@@ -72,15 +71,14 @@
 
     .square{
       margin: 2vw 0;
-      width: 7vw;
-      height: 7vw;
-      border: 1px solid black;
+      width: 11vw;
+      height: 10vw;
       display: flex;
       flex-wrap: wrap;
 
       .block{
-        width: 2.195vw;
-        height: 2.17vw;
+        width: 3vw;
+        height: 3.3vw;
         border: 1px solid black;
         font-weight: bold;
         display: flex;

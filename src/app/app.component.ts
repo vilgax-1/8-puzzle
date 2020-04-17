@@ -9,11 +9,11 @@ import { timer } from 'rxjs';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  dividido = [[ 1, 2, 3 ],
-  [ 4, 5, 6 ],
-  [ 7, 0, 8 ]];
+  dividido = [[ 1, 2, 0 ],
+  [ 6, 7, 8 ],
+  [ 4, 3, 5 ]];
 
-  numberOrder: any = [1,2,3,4,5,6,7,0,8];
+  numberOrder: any = [1, 2, 0, 6, 7, 8, 4, 3, 5];
   history = [];
   constructor(
   ) {}
@@ -59,7 +59,7 @@ export class AppComponent {
   }
 
   resolver() {
-    let time = timer(500);
+    const time = timer(1000);
     this.history = [];
     const board = new Board(this.dividido);
     const solver = new Solver();
@@ -67,13 +67,13 @@ export class AppComponent {
 
     if (solution.isSolvable) {
       const boards = solution.getSolution();
-      time.subscribe(() => {
-        for(let i = 0; i < boards.length; i++) {
+      for(let i = 0; i < boards.length; i++) {
+        time.subscribe(() => {
           this.numberOrder = [];
-          this.numberOrder.push(_.concat( boards[i].blocks[0], boards[i].blocks[1], boards[i].blocks[2]));
           this.history.push( _.concat( boards[i].blocks[0], boards[i].blocks[1], boards[i].blocks[2]));
-        }
-      });
+          this.numberOrder = _.concat( boards[i].blocks[0], boards[i].blocks[1], boards[i].blocks[2]);
+        });
+      }
     } else {
       alert('Solucion no encontrada');
     }
